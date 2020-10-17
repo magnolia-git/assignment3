@@ -1,5 +1,7 @@
 package com.meritamerica.assignment3;
 
+import java.text.ParseException;
+
 //import com.meritamerica.assignment1.BankAccount;
 
 	public class CheckingAccount extends BankAccount {
@@ -27,6 +29,6 @@ package com.meritamerica.assignment3;
 		}
 		
 		public static CheckingAccount readFromString(String accountData) throws ParseException {
-			
+			return null;
 		}
 }

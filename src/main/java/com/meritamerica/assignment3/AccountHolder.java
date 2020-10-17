@@ -193,7 +193,7 @@ package com.meritamerica.assignment3;
 
 	public CDAccount[] getCDAccounts() {return cdAccounts;}
 	
-	public CDAccount addCDAccount(CDAccount cdAccount) {
+/*	public CDAccount addCDAccount(CDAccount cdAccount) {
 		CDAccount[] currentArray = getCDAccounts();
 		if (currentArray == null) {
 			CDAccount[] newArray = new CDAccount[1];
@@ -227,23 +227,44 @@ package com.meritamerica.assignment3;
 		}
 
 		return cd;
-	}
-
-	public double getCDBalance() {
-		CDAccount[] currentArray = getCDAccounts();
-		System.out.println(currentArray.length);
-		double sum = 0;
-		if (currentArray != null) {
-
-			for (int i = 0; i < currentArray.length; i++) {
-				System.out.println(currentArray[i]);
-				sum = sum + currentArray[i].getBalance();
-
-			}
-		}
-		return sum;
+	}*/
+	
+	// This first one creates a new CDAccount...
+	
+	public CDAccount addCDAccount(CDOffering offering, double openingBalance) {
+	CDAccount newName = new CDAccount(offering, openingBalance);
+	return addCDAccount(newName);
 	}
 	
+	// ... and this second one adds it to the CDAccount array.
+	
+	public CDAccount addCDAccount(CDAccount cdAccount) {
+		CDAccount[] newArray = new CDAccount[cdAccounts.length + 1];
+		int i;
+		for (i = 0; i < cdAccounts.length; i++) {
+			newArray[i] = cdAccounts[i];
+		}
+		newArray[i] = cdAccount;
+		cdAccounts = newArray;
+		return cdAccount;
+	}
+
+
+
+	public double getCDBalance() {
+//		CDAccount[] currentArray = getCDAccounts();
+//		System.out.println(currentArray.length);
+		double sum = 0;
+//		if (currentArray != null) {
+
+			for (int i = 0; i < cdAccounts.length; i++) {
+				System.out.println(cdAccounts[i].getBalance());
+				sum = sum + cdAccounts[i].getBalance();
+
+			}
+//		}
+		return sum;
+	}
 
 
 	public double getCombinedBalance() {
@@ -320,11 +341,11 @@ package com.meritamerica.assignment3;
 	}
 	
 	public String writeToString() {
-		
+		return null;
 	}
 	
 	public static AccountHolder readFromString(String accountHolderData) throws Exception {
-		
+		return null;
 	}
 	
 }

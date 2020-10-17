@@ -29,6 +29,6 @@ import java.text.ParseException;
 		}
 		
 		public static SavingsAccount readFromString(String accountData) throws ParseException {
-			
+			return null;
 		}
 }

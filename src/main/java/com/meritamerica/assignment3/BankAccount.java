@@ -41,19 +41,19 @@ import java.util.Locale;
 		}
 		
 		public java.util.Date accountOpenedOn() {
-			
+			return null;
 		}
 		
 		public java.util.Date getOpenedOn() {
-			
+			return null;
 		}
 		
 		public static BankAccount readFromString(String accountData) throws ParseException {
-			
+			return null;
 		}
 		
 		public String writeToString() {
-			
+			return null;
 		}
 
 		public double futureValue(int years) {

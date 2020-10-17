@@ -19,10 +19,10 @@ package com.meritamerica.assignment3;
 		public double getInterestRate() {return interestRate;}
 		
 		public static CDOffering readFromString(String cdOfferingDataString) {
-			
+			return null;
 		}
 		
 		public String writeToString() {
-			
+			return null;
 		}
 }

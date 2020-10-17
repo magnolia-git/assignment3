@@ -42,11 +42,11 @@ import java.util.Date;
 		}
 		
 		public static CDAccount readFromString(String accountData) throws ParseException {
-			
+			return null;
 		}
 		
 		@Override
 		public String writeToString() {
-			
+			return null;
 		}
 }

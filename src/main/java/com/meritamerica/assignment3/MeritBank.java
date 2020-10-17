@@ -71,15 +71,15 @@ public class MeritBank {
 	}
 	
 	public static boolean readFromFile(String fileName) {
-		
+		return true;
 	}
 	
 	public static boolean writeToFile(String fileName) {
-		
+		return true;
 	}
 	
 	public static AccountHolder[] sortAccountHolders() {
-		
+		return null;
 	}
 	
 	public static void setNextAccountNumber(long nextAccountNumber) {
