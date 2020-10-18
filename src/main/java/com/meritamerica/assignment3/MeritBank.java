@@ -63,12 +63,6 @@ public class MeritBank {
 
 		return totalBalance;
 	}
-
-	public static double futureValue(double presentValue, double interestRate, int term) {
-		double something = 0;
-
-		return something;
-	}
 	
 	public static boolean readFromFile(String fileName) {
 		return true;

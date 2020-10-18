@@ -3,7 +3,7 @@ package com.meritamerica.assignment3;
 	public class CDOffering {
 
 		private int term;
-		private double interestRate;
+		private static double interestRate;
 	
 		public CDOffering()	{
 		
@@ -16,7 +16,7 @@ package com.meritamerica.assignment3;
 
 		public int getTerm() {return term;}
 
-		public double getInterestRate() {return interestRate;}
+		public static double getInterestRate() {return interestRate;}
 		
 		public static CDOffering readFromString(String cdOfferingDataString) {
 			return null;

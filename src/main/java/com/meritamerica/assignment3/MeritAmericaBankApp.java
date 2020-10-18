@@ -1,5 +1,7 @@
 package com.meritamerica.assignment3;
 
+import com.meritamerica.assignment3.AccountHolder;
+
 public class MeritAmericaBankApp {
 	public static void main(String[] args) {
 		MeritBank.readFromFile("src/test/testMeritBank_good.txt");
@@ -9,7 +11,7 @@ public class MeritAmericaBankApp {
 		MeritBank.setCDOfferings(initialCDOfferings());
 					
 		
-		AccountHolder newAcc1 = new AccountHolder();
+		AccountHolder newAcc1 = new AccountHolder("Jackie", "Chan", "Chan","1234567891");
 					
 		
 		newAcc1.addCheckingAccount(new CheckingAccount(1000.00));
@@ -55,6 +57,7 @@ public class MeritAmericaBankApp {
 		newAcc1.addCDAccount(aCDAccount);
 		
 		System.out.println("Accessing aCDAccount from newAcc1... " + newAcc1.getCDBalance());
+
 	}
 	
 	public static CDOffering[] initialCDOfferings() {

@@ -21,7 +21,7 @@ import java.util.Date;
 			
 		}
 	
-		public double getInterestRate() {return offering.getInterestRate();}
+		public double getInterestRate() {return CDOffering.getInterestRate();}
 	
 		public int getTerm() {return offering.getTerm();}
 	
@@ -29,7 +29,10 @@ import java.util.Date;
 	
 		public long getAccountNumber() {return getAccountNumber();}
 	
-		public double futureValue() {return futureValue();}
+		public double futureValue() {
+//			return futureValue(this.offering.getTerm());
+			return getBalance() * (Math.pow(1 + getInterestRate(), getTerm()));
+		}
 		
 		@Override
 		public boolean deposit(double amount) {

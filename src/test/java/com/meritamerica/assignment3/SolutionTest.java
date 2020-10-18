@@ -75,7 +75,7 @@ public class SolutionTest {
             	"123456789");
     	
     	CheckingAccount checkingAccount = accountHolder.addCheckingAccount(0);
-        
+
         assertEquals(true, checkingAccount.deposit(500.0));
     }
 
@@ -140,7 +140,7 @@ public class SolutionTest {
             	"123456789");
     	
     	SavingsAccount savingsAccount = accountHolder.addSavingsAccount(50);
-        
+
         assertEquals(false, savingsAccount.withdraw(500.0));
     }
     

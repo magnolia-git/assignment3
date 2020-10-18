@@ -8,7 +8,7 @@ package com.meritamerica.assignment3;
 //import com.meritamerica.assignment2.SavingsAccount;
 
 	public class AccountHolder implements Comparable<AccountHolder> {
-
+		public static final long MAX_ALLOWED = 250000;
 		private String firstName;
 		private String middleName;
 		private String lastName;
@@ -19,7 +19,7 @@ package com.meritamerica.assignment3;
 		private CDAccount[] cdAccounts = new CDAccount[0];
 
 	
-		public AccountHolder() {
+/*		public AccountHolder() {
 			this.firstName = "";
 			this.middleName = "";
 			this.lastName = "";
@@ -28,7 +28,7 @@ package com.meritamerica.assignment3;
 //			this.checkingAccounts = new CheckingAccount[0];
 //			this.savingsAccounts = new SavingsAccount[0];
 //			this.cdAccounts = new CDAccount[0];
-		}
+		}*/
 
 		public AccountHolder(String firstName, String middleName, String lastName, String ssn) {
 			super();
@@ -40,142 +40,53 @@ package com.meritamerica.assignment3;
 		
 // getters and setters
 		
-		public String getFirstName() {return firstName;}
+		public String getFirstName() {return this.firstName;}
 		public void setFirstName(String firstName) {this.firstName = firstName;}
 
-		public String getMiddleName() {return middleName;}
+		public String getMiddleName() {return this.middleName;}
 		public void setMiddleName(String middleName) {this.middleName = middleName;}
 
-		public String getLastName() {return lastName;}
+		public String getLastName() {return this.lastName;}
 		public void setLastName(String lastName) {this.lastName = lastName;}
 
-		public String getSSN() {return ssn;}
+		public String getSSN() {return this.ssn;}
 		public void setSsn(String ssn) {this.ssn = ssn;}
 
-		public CheckingAccount[] getCheckingAccounts() {return checkingAccounts;}
+		public CheckingAccount[] getCheckingAccounts() {return this.checkingAccounts;}
 		public void setCheckingAccount(CheckingAccount[] checkingAccount) {this.checkingAccounts = checkingAccount;}
 
-		public SavingsAccount[] getSavingsAccounts() {return savingsAccounts;}
+		public SavingsAccount[] getSavingsAccounts() {return this.savingsAccounts;}
 		public void setSavingsAccount(SavingsAccount[] savingsAccount) {this.savingsAccounts = savingsAccount;}
 		
 // method that calls the SavingsAccount class and creates array of savings accounts
-		public SavingsAccount addSavingsAccount(double openingBalance) {
-			SavingsAccount newAccount = new SavingsAccount(openingBalance);
-			SavingsAccount[] currentArray = getSavingsAccounts();
-
-			if (currentArray == null) {
-				SavingsAccount[] newSavingsAccountArray = new SavingsAccount[1];
-				newSavingsAccountArray[0] = newAccount;
-				this.savingsAccounts = newSavingsAccountArray;
-			} 
-			else if ((getSavingsBalance() + openingBalance) < 250000) {
-				SavingsAccount[] newSavingsAccountArray = new SavingsAccount[currentArray.length + 1];
-
-			for (int i = 0; i < currentArray.length; i++) {newSavingsAccountArray[i] = currentArray[i];}
-				newSavingsAccountArray[newSavingsAccountArray.length - 1] = newAccount;
-				this.savingsAccounts = newSavingsAccountArray;
-			} 
-			else {System.out.println("Your combined savings and checking account balances" + " must be less than 250,000");}
-
-				return newAccount;
-		}
-// increments new savings accounts determines if account balance is too large
-		public SavingsAccount addSavingsAccount(SavingsAccount savingsObj) {
-			SavingsAccount[] currentArray = getSavingsAccounts();
-			double sum = getSavingsBalance() + getCheckingBalance();
-			if (currentArray == null) {
-				if (sum < 250000) {
-					SavingsAccount[] newSavingsAccountArray = new SavingsAccount[1];
-					newSavingsAccountArray[0] = savingsObj;
-					this.savingsAccounts = newSavingsAccountArray;
-			} 
-				else {
-				
-					System.out.println("Your combined savings and checking account balances" + " must be less than 250,000");
-				}
-			} 
-			else if ((sum + savingsObj.getBalance()) < 250000) {
-				SavingsAccount[] newSavingsAccountArray = new SavingsAccount[currentArray.length + 1];
-
-			for (int i = 0; i < currentArray.length; i++) {newSavingsAccountArray[i] = currentArray[i];}
-				newSavingsAccountArray[newSavingsAccountArray.length - 1] = savingsObj;
-				this.savingsAccounts = newSavingsAccountArray;
-			} 
-				else {
-					System.out.println("Your combined savings and checking account balances" + " must be less than 250,000");
-				}
-
-					return savingsObj;
-			}
 		
-// method that calls the CheckingAccount class and creates array of savings accounts
-		public CheckingAccount addCheckingAccount(double openingBalance) {
-
-			CheckingAccount newAccount = new CheckingAccount(openingBalance);
-			CheckingAccount[] currentArray = getCheckingAccounts();
-
-			if (openingBalance < 250000) {
-				if (currentArray == null) {
-					CheckingAccount[] newCheckingAccountArray = new CheckingAccount[1];
-					newCheckingAccountArray[0] = newAccount;
-					this.checkingAccounts = newCheckingAccountArray;
-				} 
-				else {double sum = getCheckingBalance();
-				if (sum < 250000) {
-					CheckingAccount[] newCheckingAccountArray = new CheckingAccount[currentArray.length + 1];
-
-					for (int i = 0; i < currentArray.length; i++) {newCheckingAccountArray[i] = currentArray[i];}
-						newCheckingAccountArray[newCheckingAccountArray.length - 1] = newAccount;
-						this.checkingAccounts = newCheckingAccountArray;
-				} 
-				else {System.out.println("Checking & Savings Balance Exceed 250,000");}
-				return newAccount;
-			}
-				return newAccount;
-			} 
-				else {System.out.println("Checking & Savings Balance Exceed 250,000");
-					return newAccount;
-				}
-
-		}
-
-		public CheckingAccount addCheckingAccount(CheckingAccount checkingObj) {
-			CheckingAccount[] currentArray = getCheckingAccounts();
-			double sum = getCheckingBalance() + getSavingsBalance();
-
-			if (currentArray == null) {
-				if (sum < 250000) {
-					CheckingAccount[] newCheckingAccountArray = new CheckingAccount[1];
-					newCheckingAccountArray[0] = checkingObj;
-					this.checkingAccounts = newCheckingAccountArray;
-				} 	
-				else {
-				System.out.println("Checking & Savings Balance Exceed 250,000");}
-			} 
+		public SavingsAccount addSavingsAccount(double openingBalance) {
+			SavingsAccount newname = new SavingsAccount(openingBalance);
 			
-			else if ((sum + checkingObj.getBalance()) < 250000) {
-				CheckingAccount[] newCheckingAccountArray = new CheckingAccount[currentArray.length + 1];
-
-				for (int i = 0; i < currentArray.length; i++) {newCheckingAccountArray[i] = currentArray[i];}
-					newCheckingAccountArray[newCheckingAccountArray.length - 1] = checkingObj;
-					this.checkingAccounts = newCheckingAccountArray;
-			} 
-			else {System.out.println("Checking & Savings Balance Exceed 250,000");}
-				return checkingObj;
-		}
-
-		public double getCheckingBalance() {
-			CheckingAccount[] currentCheckingAccount = getCheckingAccounts();
-			double checkingBalance = 0;
-			if (currentCheckingAccount != null) {
-				for (int i = 0; i < currentCheckingAccount.length; i++) {
-					checkingBalance = checkingBalance + currentCheckingAccount[i].getBalance();
-				}
+			if(getCombinedBalance() + openingBalance >= MAX_ALLOWED) {
+				System.out.println("You have reached the maximum total balance across all accounts. Cannot create another.");
+				return null;
+			} else {
+				return addSavingsAccount(newname);
 			}
-
-				return checkingBalance;
 		}
 
+		public SavingsAccount addSavingsAccount(SavingsAccount savingsAccount) {
+			if(getCombinedBalance() + savingsAccount.getBalance() >= MAX_ALLOWED) {
+				System.out.println("You have reached the maximum total balance across all accounts. Cannot create another.");
+				return null;
+			} else {
+				SavingsAccount[] newArray = new SavingsAccount[savingsAccounts.length + 1];
+				int i;
+				for (i = 0; i < savingsAccounts.length; i++) {
+					newArray[i] = savingsAccounts[i];
+				}
+				newArray[i] = savingsAccount;
+				savingsAccounts = newArray;
+				return savingsAccount;
+			}
+		}
+		
 		public double getSavingsBalance() {
 		SavingsAccount[] currentSavingsAccount = getSavingsAccounts();
 		double savingsBalance = 0;
@@ -187,47 +98,56 @@ package com.meritamerica.assignment3;
 
 		return savingsBalance;
 	}
+		
+// method that calls the CheckingAccount class and creates array of savings accounts
+		public CheckingAccount addCheckingAccount(double openingBalance) {
+			CheckingAccount newname = new CheckingAccount(openingBalance);
+			
+			if(getCombinedBalance() + openingBalance >= MAX_ALLOWED) {
+				System.out.println("You have reached the maximum total balance across all accounts. Cannot create another.");
+				return null;
+			} else {
+			return addCheckingAccount(newname);
+			}
+			
+		}
+
+		public CheckingAccount addCheckingAccount(CheckingAccount checkingAccount) {
+			if(getCombinedBalance() + checkingAccount.getBalance() >= MAX_ALLOWED) {
+				System.out.println("You have reached the maximum total balance across all accounts. Cannot create another.");
+				return null;
+			} else {
+				CheckingAccount[] newArray = new CheckingAccount[checkingAccounts.length + 1];
+				int i;
+				for (i = 0; i < checkingAccounts.length; i++) {
+					newArray[i] = checkingAccounts[i];
+				}
+			
+				newArray[i] = checkingAccount;
+				checkingAccounts = newArray;
+			
+				return checkingAccount;
+			}
+		}
+
+		public double getCheckingBalance() {
+		CheckingAccount[] currentCheckingAccount = getCheckingAccounts();
+		double savingsBalance = 0;
+		if (currentCheckingAccount != null) {
+			for (int i = 0; i < currentCheckingAccount.length; i++) {
+				savingsBalance = savingsBalance + currentCheckingAccount[i].getBalance();
+			}
+		}
+
+		return savingsBalance;
+	}
 
 	
 	
 
 	public CDAccount[] getCDAccounts() {return cdAccounts;}
 	
-/*	public CDAccount addCDAccount(CDAccount cdAccount) {
-		CDAccount[] currentArray = getCDAccounts();
-		if (currentArray == null) {
-			CDAccount[] newArray = new CDAccount[1];
-			newArray[0] = cdAccount;
-			this.cdAccounts = newArray;
-		} else {
-			CDAccount[] newArray = new CDAccount[currentArray.length + 1];
-			for (int i = 0; i < currentArray.length; i++) {
-				newArray[i] = currentArray[i];
-			}
-			this.cdAccounts = newArray;
-		}
-		return cdAccount;
-	}
 
-	public CDAccount addCDAccount(CDOffering cdOfferObj, double balance) {
-		CDAccount cd = new CDAccount(cdOfferObj, balance);
-		CDAccount[] currentArray = getCDAccounts();
-		if (currentArray == null) {
-			CDAccount[] newArray = new CDAccount[1];
-			newArray[0] = cd;
-			this.cdAccounts = newArray;
-		} else {
-
-			CDAccount[] newArray = new CDAccount[currentArray.length + 1];
-			for (int i = 0; i < currentArray.length; i++) {
-				newArray[i] = currentArray[i];
-			}
-			this.cdAccounts = newArray;
-
-		}
-
-		return cd;
-	}*/
 	
 	// This first one creates a new CDAccount...
 	
@@ -252,10 +172,8 @@ package com.meritamerica.assignment3;
 
 
 	public double getCDBalance() {
-//		CDAccount[] currentArray = getCDAccounts();
-//		System.out.println(currentArray.length);
+
 		double sum = 0;
-//		if (currentArray != null) {
 
 			for (int i = 0; i < cdAccounts.length; i++) {
 				System.out.println(cdAccounts[i].getBalance());

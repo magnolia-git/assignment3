@@ -23,37 +23,35 @@ import java.util.Scanner;
 import java.util.Vector;
 
 	public class BankAccount {
-		private double interestRate;
-		private double balance;
-		private long accountNumber;
+		public double interestRate = 0;
+		private static double balance;
+		private static long accountNumber;
 		private static long accountNum = 1000;
 		private static java.util.Date accountOpenedOn;
 
 		public BankAccount() {
 			accountNum = accountNum + 1;
-			this.accountNumber = accountNum;
+			BankAccount.accountNumber = accountNum;
 		}
 
 		public BankAccount(double openingBalance) {
-			this.balance = openingBalance;
+			BankAccount.balance = openingBalance;
+			this.interestRate = this.getInterestRate();
 		}
 
 		public BankAccount(double interestRate, double balance) {
-			super();
-			this.interestRate = interestRate;
-			this.balance = balance;
+			BankAccount.balance = balance;
+			this.interestRate = this.getInterestRate();
+
 		}
 
 		public BankAccount(long accountNumber, double interestRate, double balance) {
-			super();
-			this.accountNumber = accountNumber;
-			this.interestRate = interestRate;
+			BankAccount.accountNumber = accountNumber;
 			this.balance = balance;
 		}
 
 	// Made accountOpenedOn static and created getters and setters
 		public BankAccount(double interestRate, double balance, java.util.Date accountOpenedOn) {
-			super();
 			this.interestRate = interestRate;
 			this.balance = balance;
 			this.accountOpenedOn = accountOpenedOn;
@@ -61,7 +59,6 @@ import java.util.Vector;
 		}
 
 		public BankAccount(long accountNumber, double interestRate, double balance, java.util.Date accountOpenedOn) {
-			super();
 			this.accountNumber = accountNumber;
 			this.interestRate = interestRate;
 			this.balance = balance;
@@ -89,19 +86,21 @@ import java.util.Vector;
 				FileOutputStream fos = new FileOutputStream(input);
 				ObjectOutputStream oos = new ObjectOutputStream(fos);
 				oos.writeObject(obj);	
-				}
 				
 			} catch(FileNotFoundException ex11) {
-				ex11.printStackTrace();
+				System.out.println("Error: file not found.");
 			} catch (IOException ex1) {
-				ex11.printStackTrace();
+				System.out.println("Error: incorrect input / output!");
+			}
 		// not sure what to return hear
-			return ;
+			return obj;
 			
 		}
 /* This is in the right direction I think, I believe what's missing is the conversion of the String accountData into  
  * an instance of BankAccount 
 	*/
+		
+		
 		public  static BankAccount readFromString(String accountData) throws ParseException {
 			BankAccount obj = new BankAccount();
 			File output = new File("accounts.txt");
@@ -115,28 +114,28 @@ import java.util.Vector;
 				Iterator<BankAccount> iter = bankInput.iterator();
 				while(iter.hasNext()) {
 					BankAccount b = iter.next() ;
-					accountData = BankAccount.toString();
+					accountData = obj.toString();
 				}
-					
-				}
+
 		// there is a syntax error: Identifier expected.. will have to get help tomorrow in regards to this
 		} catch (FileNotFoundException ex) {
-			ex11.printStackTrace();
+			System.out.println("Error: File not found!");
 		} catch (IOException ex) {
-			ex11.printStackTrace(); 
-			}
-		return accountData;
+			System.out.println("Error: Input / output error!"); 
+			} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return obj;
 	}
 		public String writeToString() {
 	
-			return null;
+			return this.toString();
 		}
 
 		public double futureValue(int years) {
-			double balance = getBalance();
-			double interestRate = getInterestRate();
 
-			return balance * (Math.pow(1 + interestRate, years));
+			return balance * (Math.pow(1 + getInterestRate(), years));
 		}
 
 		public boolean withdraw(double amount) {
@@ -149,7 +148,7 @@ import java.util.Vector;
 				return false;
 			}
 
-		this.balance = getBalance() - amount;
+		BankAccount.balance = getBalance() - amount;
 		return true;
 		}
 
@@ -159,52 +158,42 @@ import java.util.Vector;
 				return false;
 		}
 
-		this.balance = getBalance() + amount;
+		BankAccount.balance = getBalance() + amount;
 			return true;
 		}
 
 		public double getInterestRate() {
-			return interestRate;
+			System.out.println("Interest rate: " + interestRate);
+			return this.interestRate;
 		}
 
-		public void setInterestRate(double interestRate) {
-			this.interestRate = interestRate;
-		}
-
-		public double getBalance() {
+		public static double getBalance() {
 			return balance;
 		}
 
 		public void setBalance(double balance) {
-			this.balance = balance;
+			BankAccount.balance = balance;
 		}
 
 		public long getAccountNumber() {
 			return accountNumber;
 		}
-
-		@Override
+		
 		public String toString() {
-			return generateStringForToString();
+
+			String string = "";
+			
+			string += ("Checking Account Balance: " + displayInUSD(getBalance()) + "\n" + 
+					"Checking Account Interest Rate : " + String.format("%.5f", getInterestRate()) + " \n" +
+					"Checking Account Balance in 3 years: " + displayInUSD(futureValue(3)) + "\n");
+			
+			return string;
 		}
-
-	/*
-	 * returns a string to be used in the toString method
-	 */
-		public String generateStringForToString() {
-			StringBuilder str = new StringBuilder();
-
-		str.append("Checking Account Balance: " + displayInUSD(getBalance()) + "\n");
-		str.append("Checking Account Interest Rate : " + String.format("%.5f", getInterestRate()) + " \n");
-		str.append("Checking Account Balance in 3 years: " + displayInUSD(futureValue(3)) + "\n");
-
-		return str.toString();
-	}
 
 	/*
 	 * returns the specified decimal formatted in United States Dollar
 	 */
-	public String displayInUSD(double decimal) {
+	public static String displayInUSD(double decimal) {
 		NumberFormat formatter = NumberFormat.getCurrencyInstance(Locale.US);
 
 		return formatter.format(decimal);
