@@ -259,11 +259,12 @@ package com.meritamerica.assignment3;
 	}
 	
 	public String writeToString() {
-		return null;
+		return firstName + "," + middleName + "," + lastName + "," + ssn;
 	}
 	
 	public static AccountHolder readFromString(String accountHolderData) throws Exception {
-		return null;
+		String[] str = accountHolderData.split(",");
+		return new AccountHolder(str[0],str[1], str[2], str[3]);
 	}
 	
 }

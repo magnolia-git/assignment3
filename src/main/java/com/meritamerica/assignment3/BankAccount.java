@@ -1,9 +1,11 @@
 package com.meritamerica.assignment3;
 
+import java.io.BufferedReader;
 //import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -24,58 +26,68 @@ import java.util.Vector;
 
 	public class BankAccount {
 		public double interestRate = 0;
-		private static double balance;
-		private static long accountNumber;
-		private static long accountNum = 1000;
+		private double balance;
+		protected static long accountNumber;
 		private static java.util.Date accountOpenedOn;
+		static private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
 		public BankAccount() {
-			accountNum = accountNum + 1;
-			BankAccount.accountNumber = accountNum;
+			accountNumber++;
 		}
 
 		public BankAccount(double openingBalance) {
-			BankAccount.balance = openingBalance;
+			accountNumber++;
+			this.balance = openingBalance;
 			this.interestRate = this.getInterestRate();
 		}
 
 		public BankAccount(double interestRate, double balance) {
-			BankAccount.balance = balance;
-			this.interestRate = this.getInterestRate();
+			accountNumber++;
+			this.balance = balance;
+			this.interestRate = interestRate;
 
 		}
 
 		public BankAccount(long accountNumber, double interestRate, double balance) {
+			accountNumber++;
 			BankAccount.accountNumber = accountNumber;
 			this.balance = balance;
 		}
 
 	// Made accountOpenedOn static and created getters and setters
 		public BankAccount(double interestRate, double balance, java.util.Date accountOpenedOn) {
+			accountNumber++;
 			this.interestRate = interestRate;
 			this.balance = balance;
 			this.accountOpenedOn = accountOpenedOn;
 
 		}
 
-		public BankAccount(long accountNumber, double interestRate, double balance, java.util.Date accountOpenedOn) {
-			this.accountNumber = accountNumber;
+		public BankAccount(long accountNumber, double balance, double interestRate, Date accountOpenedOn) {
+			this.accountNumber = accountNumber++;
 			this.interestRate = interestRate;
 			this.balance = balance;
 			this.accountOpenedOn = accountOpenedOn;
 		}
 
-// Not sure why there is a suppress warning, but the solution will work for both methods 
+		public BankAccount(long accountNumber, double balance, double interestRate, Date accountOpenedOn,
+				int term) {
+			this.accountNumber = accountNumber++;
+			this.balance = balance;
+			this.interestRate = interestRate;
+			this.accountOpenedOn = accountOpenedOn;
+			// TODO Auto-generated constructor stub
+		}
+
 		public java.util.Date accountOpenedOn() {
-			@SuppressWarnings("deprecation")
-			Date format = new Date("MM-dd-yyyy");
-			return format;
+
+
+			return accountOpenedOn;
 		}
 
 		public java.util.Date getOpenedOn() {
-			@SuppressWarnings("deprecation")
-			Date format = new Date("MM-dd-yyyy");
-			return format;
+			
+			return accountOpenedOn;
 		}
 
 		
@@ -102,10 +114,11 @@ import java.util.Vector;
 		
 		
 		public  static BankAccount readFromString(String accountData) throws ParseException {
-			BankAccount obj = new BankAccount();
-			File output = new File("accounts.txt");
+/*			BankAccount obj = new BankAccount();
 			try {
-				FileInputStream fis = new FileInputStream(output);
+				File input = new File(accountData);
+
+				FileInputStream fis = new FileInputStream(input);
 				ObjectInputStream ois = new ObjectInputStream(fis);
 				ois.readObject();
 				Vector<BankAccount> bankInput = (Vector<BankAccount>) ois.readObject();
@@ -114,8 +127,9 @@ import java.util.Vector;
 				Iterator<BankAccount> iter = bankInput.iterator();
 				while(iter.hasNext()) {
 					BankAccount b = iter.next() ;
-					accountData = obj.toString();
-				}
+					String fileLine = obj.toString();
+					System.out.println(fileLine);
+			}
 
 		// there is a syntax error: Identifier expected.. will have to get help tomorrow in regards to this
 		} catch (FileNotFoundException ex) {
@@ -123,11 +137,14 @@ import java.util.Vector;
 		} catch (IOException ex) {
 			System.out.println("Error: Input / output error!"); 
 			} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			// TODO Auto-generated catch block/			e.printStackTrace();
 		}
-		return obj;
+		return obj;*/
+		return null;
 	}
+	
+
+		
 		public String writeToString() {
 	
 			return this.toString();
@@ -148,7 +165,7 @@ import java.util.Vector;
 				return false;
 			}
 
-		BankAccount.balance = getBalance() - amount;
+		balance = getBalance() - amount;
 		return true;
 		}
 
@@ -158,25 +175,24 @@ import java.util.Vector;
 				return false;
 		}
 
-		BankAccount.balance = getBalance() + amount;
+		balance = getBalance() + amount;
 			return true;
 		}
 
 		public double getInterestRate() {
-			System.out.println("Interest rate: " + interestRate);
 			return this.interestRate;
 		}
 
-		public static double getBalance() {
+		public double getBalance() {
 			return balance;
 		}
 
 		public void setBalance(double balance) {
-			BankAccount.balance = balance;
+			balance = balance;
 		}
 
 		public long getAccountNumber() {
-			return accountNumber;
+			return accountNumber++;
 		}
 		
 		public String toString() {

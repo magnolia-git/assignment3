@@ -1,28 +1,34 @@
 package com.meritamerica.assignment3;
 
-	public class CDOffering {
+import java.util.ArrayList;
+import java.util.Arrays;
 
-		private int term;
+public class CDOffering {
+
+		private static int term;
 		private static double interestRate;
 	
 		public CDOffering()	{
 		
 		}
 		public CDOffering(int term, double interestRate) {
-			this.term = term;
-			this.interestRate = interestRate;
+			CDOffering.term = term;
+			CDOffering.interestRate = interestRate;
 		}
 	
 
-		public int getTerm() {return term;}
+		public static int getTerm() {return term;}
 
 		public static double getInterestRate() {return interestRate;}
 		
 		public static CDOffering readFromString(String cdOfferingDataString) {
-			return null;
+			CDOffering cdOff;
+			ArrayList<String> aL = new ArrayList<>(Arrays.asList(cdOfferingDataString.split(",")));
+			cdOff = new CDOffering(Integer.parseInt(aL.get(0)), Double.parseDouble(aL.get(1)));
+			return cdOff;
 		}
 		
-		public String writeToString() {
-			return null;
+		public String writeToString(String str) {
+			return term + "," + interestRate;
 		}
 }
