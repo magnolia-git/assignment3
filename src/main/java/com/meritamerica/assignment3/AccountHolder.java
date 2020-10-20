@@ -1,12 +1,5 @@
 package com.meritamerica.assignment3;
 
-//import java.util.Arrays;
-
-//import com.meritamerica.assignment2.CDAccount;
-//import com.meritamerica.assignment2.CDOffering;
-//import com.meritamerica.assignment2.CheckingAccount;
-//import com.meritamerica.assignment2.SavingsAccount;
-
 	public class AccountHolder implements Comparable<AccountHolder> {
 		public static final long MAX_ALLOWED = 250000;
 		private String firstName;
@@ -17,18 +10,6 @@ package com.meritamerica.assignment3;
 		private CheckingAccount[] checkingAccounts = new CheckingAccount[0];
 		private SavingsAccount[] savingsAccounts = new SavingsAccount[0];
 		private CDAccount[] cdAccounts = new CDAccount[0];
-
-	
-/*		public AccountHolder() {
-			this.firstName = "";
-			this.middleName = "";
-			this.lastName = "";
-			this.ssn = "";
-
-//			this.checkingAccounts = new CheckingAccount[0];
-//			this.savingsAccounts = new SavingsAccount[0];
-//			this.cdAccounts = new CDAccount[0];
-		}*/
 
 		public AccountHolder(String firstName, String middleName, String lastName, String ssn) {
 			super();
@@ -52,11 +33,11 @@ package com.meritamerica.assignment3;
 		public String getSSN() {return this.ssn;}
 		public void setSsn(String ssn) {this.ssn = ssn;}
 
-		public CheckingAccount[] getCheckingAccounts() {return this.checkingAccounts;}
-		public void setCheckingAccount(CheckingAccount[] checkingAccount) {this.checkingAccounts = checkingAccount;}
+		public CheckingAccount[] getCheckingAccounts() {return checkingAccounts;}
+		public void setCheckingAccount(CheckingAccount[] checkingAccount) {checkingAccounts = checkingAccount;}
 
-		public SavingsAccount[] getSavingsAccounts() {return this.savingsAccounts;}
-		public void setSavingsAccount(SavingsAccount[] savingsAccount) {this.savingsAccounts = savingsAccount;}
+		public SavingsAccount[] getSavingsAccounts() {return savingsAccounts;}
+		public void setSavingsAccount(SavingsAccount[] savingsAccount) {savingsAccounts = savingsAccount;}
 		
 // method that calls the SavingsAccount class and creates array of savings accounts
 		
@@ -88,14 +69,13 @@ package com.meritamerica.assignment3;
 		}
 		
 		public double getSavingsBalance() {
-		SavingsAccount[] currentSavingsAccount = getSavingsAccounts();
-		double savingsBalance = 0;
-		if (currentSavingsAccount != null) {
-			for (int i = 0; i < currentSavingsAccount.length; i++) {
-				savingsBalance = savingsBalance + currentSavingsAccount[i].getBalance();
+			double savingsBalance = 0;
+			for (int i = 0; i < savingsAccounts.length; i++) {
+				System.out.println("Savings account number " + i + ": " + savingsAccounts[i].getBalance());
+				savingsBalance += savingsAccounts[i].getBalance();
 			}
-		}
-
+		
+		System.out.println("Savings balance: " + savingsBalance);
 		return savingsBalance;
 	}
 		
@@ -125,21 +105,22 @@ package com.meritamerica.assignment3;
 			
 				newArray[i] = checkingAccount;
 				checkingAccounts = newArray;
-			
+				System.out.println("Added checking account to array");
 				return checkingAccount;
 			}
 		}
 
 		public double getCheckingBalance() {
-		CheckingAccount[] currentCheckingAccount = getCheckingAccounts();
-		double savingsBalance = 0;
-		if (currentCheckingAccount != null) {
-			for (int i = 0; i < currentCheckingAccount.length; i++) {
-				savingsBalance = savingsBalance + currentCheckingAccount[i].getBalance();
-			}
-		}
+		double checkingBalance = 0;
+		
 
-		return savingsBalance;
+		for (int i = 0; i < checkingAccounts.length; i++) {
+			System.out.println("CheckingAccount balance number " + i + ": " + checkingAccounts[i].getBalance());
+			checkingBalance = checkingBalance + checkingAccounts[i].getBalance();
+			
+		}
+		System.out.println("Checkingbalance: " + checkingBalance);
+		return checkingBalance;
 	}
 
 	
@@ -175,47 +156,42 @@ package com.meritamerica.assignment3;
 
 		double sum = 0;
 
-			for (int i = 0; i < cdAccounts.length; i++) {
-				System.out.println(cdAccounts[i].getBalance());
-				sum = sum + cdAccounts[i].getBalance();
+		for (int i = 0; i < cdAccounts.length; i++) {
+			System.out.println("CDAccount balance number " + i + ": " + cdAccounts[i].getBalance());
+			sum += cdAccounts[i].getBalance();
 
-			}
+		}
 //		}
+		System.out.println("CDBalance sum: " + sum);
 		return sum;
 	}
 
 
 	public double getCombinedBalance() {
-
+		double combinedBalance = 0;
+		System.out.println("Combined: " + (getCheckingBalance() + getSavingsBalance() + getCDBalance()));
+		combinedBalance += getCheckingBalance();
+		combinedBalance += getSavingsBalance();
+		combinedBalance += getCDBalance();
+		System.out.println("Combined: " + combinedBalance);
+//		return combinedBalance;
 		return getCheckingBalance() + getSavingsBalance() + getCDBalance();
 	}
 
 	public int getNumberOfCheckingAccounts() {
-		int numberOfCheckingAccounts = 0;
-
-		if (checkingAccounts == null) {
-			return numberOfCheckingAccounts;
-		} else {
-			return checkingAccounts.length;
-		}
+		System.out.println("Number of checking accounts: " + checkingAccounts.length);
+		return checkingAccounts.length;
+		
 	}
 
 	public int getNumberOfSavingsAccounts() {
-		int numberOfSavingsAccounts = 0;
-		if (savingsAccounts == null) {
-			return numberOfSavingsAccounts;
-		} else {
-			return savingsAccounts.length;
-		}
+		System.out.println("Number of savings accounts: " + savingsAccounts.length);
+		return savingsAccounts.length;
 	}
 
 	public int getNumberOfCDAccounts() {
-		int numberOfCDAccounts = 0;
-		if (cdAccounts == null) {
-			return numberOfCDAccounts;
-		} else {
-			return cdAccounts.length;
-		}
+		System.out.println("Number of cd accounts: " + cdAccounts.length);
+			return cdAccounts.length;		
 	}
 
 	/*
@@ -254,8 +230,8 @@ package com.meritamerica.assignment3;
 
 	@Override
 	public int compareTo(AccountHolder otherAccountHolder) {
-		// TODO Auto-generated method stub
-		return 0;
+		if(this.getCombinedBalance() > otherAccountHolder.getCombinedBalance()) return 1;
+		else return -1;
 	}
 	
 	public String writeToString() {
@@ -263,7 +239,9 @@ package com.meritamerica.assignment3;
 	}
 	
 	public static AccountHolder readFromString(String accountHolderData) throws Exception {
+		System.out.println("reading from string in account holder.");
 		String[] str = accountHolderData.split(",");
+		System.out.println(str[0] + str[1] + str[2] + str[3]);
 		return new AccountHolder(str[0],str[1], str[2], str[3]);
 	}
 	

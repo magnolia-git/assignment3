@@ -5,9 +5,22 @@ public class MeritAmericaBankApp {
 	public static void main(String[] args) throws ParseException {
 		try {
 			MeritBank.readFromFile("src/test/testMeritBank_good.txt");
+			MeritBank.writeToFile("test.txt");
 			System.out.println("Hello Merit America!");
-			System.out.println(MeritBank.getNextAccountNumber());
-			System.out.println(MeritBank.getCDOfferings().length);
+			AccountHolder accountHolder = new AccountHolder(
+		        	"Sadiq",
+		        	"",
+		        	"Manji",
+		        	"123456789");
+			System.out.println(accountHolder.getFirstName());
+			System.out.println(accountHolder.getMiddleName());
+			System.out.println(accountHolder.getLastName());
+			System.out.println(accountHolder.getSSN());
+			System.out.println(accountHolder.getNumberOfCDAccounts());
+			System.out.println(accountHolder.getNumberOfCheckingAccounts());
+			System.out.println(accountHolder.getNumberOfSavingsAccounts());
+			System.out.println(accountHolder.getCombinedBalance());
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

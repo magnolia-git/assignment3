@@ -1,9 +1,11 @@
 package com.meritamerica.assignment3;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
 
@@ -14,12 +16,17 @@ public class MeritBank {
 	static long masterAccountNumber = 000000000;
 
 	public static void addAccountHolder(AccountHolder accountHolder) {
-		AccountHolder[] newArray = new AccountHolder[1];
-		newArray[0] = accountHolder;
+		AccountHolder[] newArray = new AccountHolder[accountHolders.length + 1];
+		int i = 0;
+		for (i = 0; i < accountHolders.length; i++) {
+			newArray[i] = accountHolders[i];
+		}
+		newArray[i] = accountHolder;
 		accountHolders = newArray;
 	}
 
 	public static AccountHolder[] getAccountHolders() {
+//		System.out.println("Account holders " + MeritBank.accountHolders.length);
 		return accountHolders;
 	}
 
@@ -41,12 +48,11 @@ public class MeritBank {
 	}
 
 	public static void clearCDOfferings() {
-		if (getCDOfferings() != null) {
-			for (int i = 0; i < cdOfferings.length; i++) {
-				cdOfferings[i] = new CDOffering();
-			}
+
+		cdOfferings = new CDOffering[0];
+			
 		}
-	}
+
 
 	public static void setCDOfferings(CDOffering[] offerings) {
 		cdOfferings = new CDOffering[5];
@@ -68,75 +74,108 @@ public class MeritBank {
 	}
 	
 	public static boolean readFromFile(String fileName) {
+		File input = new File(fileName);
 
-		try {
-			File input = new File(fileName);
-			FileReader fileScan = new FileReader(fileName);
-			BufferedReader bufferRead = new BufferedReader(fileScan);
+		try (BufferedReader bufferRead = new BufferedReader(new FileReader(input))){
+
 			masterAccountNumber = Long.valueOf(bufferRead.readLine());		// Sets the masterAccountNumber to 11
 			
 			// Reads the line with the number of CDOfferings...
-			CDOffering[] newOfferings = new CDOffering[Integer.valueOf(bufferRead.readLine())];
-//			MeritBank.cdOfferings = new CDOffering[newOfferings.length];
+			CDOffering[] newOfferings = new CDOffering[Integer.valueOf(bufferRead.readLine())];	// Creates new CDOffering array, sets it to 3
 			
 			for (int i = 0; i < newOfferings.length; i++) {
 				// Assigns 
 				newOfferings[i] = CDOffering.readFromString(bufferRead.readLine());
+
 			}
-			MeritBank.cdOfferings = newOfferings;
-			
-			
+			cdOfferings = newOfferings;
 			
 			AccountHolder[] newAccountHolders = new AccountHolder[Integer.valueOf(bufferRead.readLine())];
 			for (int i = 0; i < newAccountHolders.length; i++) {
-
 				newAccountHolders[i] = AccountHolder.readFromString(bufferRead.readLine());
+
 
 				CheckingAccount[] newCheckingAccounts = new CheckingAccount[Integer.valueOf(bufferRead.readLine())];
 				for (int j = 0; j < newCheckingAccounts.length; j++) {
-					newCheckingAccounts[j] = CheckingAccount.readFromString(bufferRead.readLine());
+					newAccountHolders[i].addCheckingAccount(CheckingAccount.readFromString(bufferRead.readLine()));
+
 				}
-				
-				
+
 				SavingsAccount[] newSavingsAccounts = new SavingsAccount[Integer.valueOf(bufferRead.readLine())];
 				for (int j = 0; j < newSavingsAccounts.length; j++) {
-					newSavingsAccounts[j] = SavingsAccount.readFromString(bufferRead.readLine());
+					newAccountHolders[i].addSavingsAccount(SavingsAccount.readFromString(bufferRead.readLine()));
 				}
 				
 				CDAccount[] newCDAccounts = new CDAccount[Integer.valueOf(bufferRead.readLine())];
 				for (int j = 0; j < newCDAccounts.length; j++) {
-					newCDAccounts[j] = CDAccount.readFromString(bufferRead.readLine());
+					newAccountHolders[i].addCDAccount(CDAccount.readFromString(bufferRead.readLine()));
 				}
 			}
-			MeritBank.accountHolders = newAccountHolders;
-			
+			accountHolders = newAccountHolders;
 
-		} catch (FileNotFoundException ex) {
+			return true;
+
+		} catch (FileNotFoundException e) {
 			System.out.println("Error: File not found!");
-			return false;
-		} catch (IOException ex) {
+
+		} catch (IOException e) {
 			System.out.println("Error: Input / output error!");
-			return false;
-			} catch (Exception e) {
-			// TODO Auto-generated catch block
+
+		} catch (Exception e) {
+
 			e.printStackTrace();
 		}
-		return true;
+		return false;
 	}
 	
 	public static boolean writeToFile(String fileName) {
-		return true;
+		try {
+            FileWriter fr = new FileWriter(fileName);
+            BufferedWriter bw = new BufferedWriter(fr);
+
+            bw.write(String.valueOf(masterAccountNumber));				// 11
+            bw.newLine();
+            bw.write(String.valueOf(cdOfferings.length));				// 3
+            bw.newLine();
+            for(int i = 0; i < cdOfferings.length; i++) {
+                bw.write(cdOfferings[i].writeToString());
+                bw.newLine();
+            }
+            bw.write(String.valueOf(accountHolders.length));
+            bw.newLine();
+            for(int i = 0; i < accountHolders.length; i++) {
+                bw.write(accountHolders[i].writeToString());
+                bw.newLine();
+                bw.write(accountHolders[i].getNumberOfCheckingAccounts());
+                for(int j = 0; j < accountHolders[i].getNumberOfCheckingAccounts();j++) {
+                    bw.write(String.valueOf(accountHolders[i].getCheckingAccounts()[j].writeToString()));
+                    bw.newLine();
+                }
+                for(int k = 0; k < accountHolders[i].getNumberOfSavingsAccounts();k++) {
+                    bw.write(String.valueOf(accountHolders[i].getSavingsAccounts()[k].writeToString()));
+                    bw.newLine();
+                }
+                for(int g = 0; g < accountHolders[i].getNumberOfCDAccounts();g++) {
+                    bw.write(String.valueOf(accountHolders[i].getCDAccounts()[g].writeToString()));
+                    bw.newLine();
+                }
+            }
+            bw.close();
+            return true;
+		
+        } catch (IOException e) {
+            return false;
+        }
 	}
 	
 	public static AccountHolder[] sortAccountHolders() {
-		AccountHolder[] sortedArray;
-		sortedArray = MeritBank.accountHolders;
-		Arrays.sort(sortedArray);
-		return sortedArray;
+		
+		Arrays.sort(accountHolders);
+		return accountHolders;
+		
 	}
 	
 	public static void setNextAccountNumber(long nextAccountNumber) {
 		nextAccountNumber = getNextAccountNumber() + 1;
 	}
-
 }

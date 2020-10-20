@@ -28,7 +28,7 @@ public class CDOffering {
 			return cdOff;
 		}
 		
-		public String writeToString(String str) {
+		public String writeToString() {
 			return term + "," + interestRate;
 		}
 }
